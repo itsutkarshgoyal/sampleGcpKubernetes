@@ -87,7 +87,6 @@ pipeline {
 		  echo "Docker Image Step"
 		  bat 'dotnet publish -c Release'
 		  bat "docker build -t i_${username}_master --no-cache -f Dockerfile ."
-		  bat "docker tag i_${username} ${registry}:latest"
 		}
 	   }
 	   
@@ -104,7 +103,8 @@ pipeline {
 	   {
 	     steps {
 		     echo "Move Image to Docker Hub"
-			 
+			 bat "docker tag i_${username}_master :$BUILD_NUMBER"
+			 bat "docker tag i_${username}_master ${registry}:latest"
 			 withDockerRegistry([credentialsId: 'DockerHub', url:""]){
                bat "docker tag i_${username} ${registry}:latest"			  
 			   bat "docker push ${registry}:${BUILD_NUMBER}"
