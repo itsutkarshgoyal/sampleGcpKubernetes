@@ -82,22 +82,23 @@ pipeline {
 		  }
 	   }
 	   
-	   /*stage('Docker Image'){
+	   stage('Docker Image'){
 	    steps {
 		  echo "Docker Image Step"
 		  bat 'dotnet publish -c Release'
 		  bat "docker build -t i_${username}_master --no-cache -f Dockerfile ."
+		  bat "docker tag i_${username} ${registry}:latest"
 		}
-	   }*/
+	   }
 	   
-	  stage('Building image') {
+	  /*stage('Building image') {
         steps{
           script {
               docker.build registry + ":$BUILD_NUMBER"
            }
 		    bat "docker tag i_${username} ${registry}:latest"
 		}
-      }
+      }*/
 	  	  
 	    stage('Move Image to Docker Hub')
 	   {
