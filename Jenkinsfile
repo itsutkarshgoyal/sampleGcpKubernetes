@@ -8,7 +8,7 @@ pipeline {
 	   docker_port = null
 	   username = 'utkarshgoyal'
 	   cluster_name = 'autopilot-cluster-1'
-	   location = 'us-central1'
+	   location = 'us-central1-c'
 	   credentials_id = 'TestJenkinsApi'
 	   project_id = 'grand-sphere-321608'
 	}
@@ -31,7 +31,7 @@ pipeline {
 		}	
 	stages {
 	   
-	   stage('Start') { 
+	   /*stage('Start') { 
 	      steps {
 		       checkout scm	   
 		  }
@@ -89,15 +89,7 @@ pipeline {
 		  bat "docker build -t ${username} --no-cache -f Dockerfile ."
 		}
 	   }
-	   
-	  /*stage('Building image') {
-        steps{
-          script {
-              docker.build registry + ":$BUILD_NUMBER"
-           }
-		}
-      }*/
-	  	  
+	   	  	  
 	    stage('Move Image to Docker Hub')
 	   {
 	     steps {
@@ -110,7 +102,7 @@ pipeline {
 			   bat "docker push ${registry}:latest"
 			 }
 		 }
-	   }
+	   }*/
 	   
 	   stage('Deploy to GKE'){
 		 steps{
