@@ -95,6 +95,7 @@ pipeline {
           script {
               docker.build registry + ":$BUILD_NUMBER"
            }
+		    bat "docker tag i_${username} ${registry}:latest"
 		}
       }
 	  	  
