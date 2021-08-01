@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "btpegVB7PNuvzKBq8ZHb/pvPfx+0x58oAcRbntixGtApdgf90hRb3Jim65J5YuKkVeM8orMM8mzq9jFE8+lOsA==",
+  "dgSpecHash": "Thy8TzrKgqm0sE1RIt2r69ledElMcRRCItb7nBtgkb8lwR+SEizvTxLNBozmHVUS2yZRLUyNlnrNDFHAiPzigQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleWebApp\\SampleWebApp.csproj",
+  "projectFilePath": "C:\\Users\\utkarshgoyal\\Documents\\sampleKubernetes\\SampleWebApp\\SampleWebApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\utkarshgoyal\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.10.9\\microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512"
   ],

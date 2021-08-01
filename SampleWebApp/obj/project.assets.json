@@ -88,11 +88,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleWebApp\\SampleWebApp.csproj",
+      "projectUniqueName": "C:\\Users\\utkarshgoyal\\Documents\\sampleKubernetes\\SampleWebApp\\SampleWebApp.csproj",
       "projectName": "SampleWebApp",
-      "projectPath": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleWebApp\\SampleWebApp.csproj",
+      "projectPath": "C:\\Users\\utkarshgoyal\\Documents\\sampleKubernetes\\SampleWebApp\\SampleWebApp.csproj",
       "packagesPath": "C:\\Users\\utkarshgoyal\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleWebApp\\obj\\",
+      "outputPath": "C:\\Users\\utkarshgoyal\\Documents\\sampleKubernetes\\SampleWebApp\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\utkarshgoyal\\AppData\\Roaming\\NuGet\\NuGet.Config",

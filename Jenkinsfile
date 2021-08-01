@@ -31,7 +31,7 @@ pipeline {
 		}	
 	stages {
 	   
-	   /*stage('Start') { 
+	   stage('Start') { 
 	      steps {
 		       checkout scm	   
 		  }
@@ -102,7 +102,7 @@ pipeline {
 			   bat "docker push ${registry}:latest"
 			 }
 		 }
-	   }*/
+	   }
 	   
 	   stage('Deploy to GKE'){
 		 steps{

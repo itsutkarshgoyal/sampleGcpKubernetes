@@ -9,9 +9,12 @@
       "SampleApplicationTest/1.0.0": {
         "dependencies": {
           "Microsoft.NET.Test.Sdk": "16.7.1",
+          "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.10.9",
           "Moq": "4.16.1",
+          "OpenCover": "4.7.1221",
           "SampleWebApp": "1.0.0",
           "coverlet.collector": "1.3.0",
+          "coverlet.msbuild": "3.1.0",
           "xunit": "2.4.1",
           "xunit.runner.visualstudio": "2.4.3"
         },
@@ -40,6 +43,7 @@
         }
       },
       "coverlet.collector/1.3.0": {},
+      "coverlet.msbuild/3.1.0": {},
       "Microsoft.CodeCoverage/16.7.1": {
         "runtime": {
           "lib/netcoreapp1.0/Microsoft.VisualStudio.CodeCoverage.Shim.dll": {
@@ -322,6 +326,7 @@
           }
         }
       },
+      "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.10.9": {},
       "Microsoft.Win32.Primitives/4.3.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "1.1.0",
@@ -429,6 +434,7 @@
           }
         }
       },
+      "OpenCover/4.7.1221": {},
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.fedora.23-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
       "runtime.fedora.24-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {},
@@ -1194,6 +1200,9 @@
       },
       "xunit.runner.visualstudio/2.4.3": {},
       "SampleWebApp/1.0.0": {
+        "dependencies": {
+          "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": "1.10.9"
+        },
         "runtime": {
           "SampleWebApp.dll": {}
         }
@@ -1219,6 +1228,13 @@
       "sha512": "sha512-t8pnf5SX2ya0RX4vjoxsbhDMQCZJcpPun2neHKJ4FouMmObylo25FvoOydvf3Bl+l+IzWw7u2vjEeCBHnleB9g==",
       "path": "coverlet.collector/1.3.0",
       "hashPath": "coverlet.collector.1.3.0.nupkg.sha512"
+    },
+    "coverlet.msbuild/3.1.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-xOv5HZagq0I6uF4vt8NVVpwcA2W/uGmNcbLStao2eMk98RQH5NFPQuouh2nWWPSZrNIhGG/iYbBn2pO4s5i+ig==",
+      "path": "coverlet.msbuild/3.1.0",
+      "hashPath": "coverlet.msbuild.3.1.0.nupkg.sha512"
     },
     "Microsoft.CodeCoverage/16.7.1": {
       "type": "package",
@@ -1269,6 +1285,13 @@
       "path": "microsoft.testplatform.testhost/16.7.1",
       "hashPath": "microsoft.testplatform.testhost.16.7.1.nupkg.sha512"
     },
+    "Microsoft.VisualStudio.Azure.Containers.Tools.Targets/1.10.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Sug+YeP9YYigFnUdvPCUJjBz7cc2VVR7UBZkIRwPWmVR/HmIM5HbcpX940s4BM3xgL3QHGp3qN7AqkcZ/MjZEw==",
+      "path": "microsoft.visualstudio.azure.containers.tools.targets/1.10.9",
+      "hashPath": "microsoft.visualstudio.azure.containers.tools.targets.1.10.9.nupkg.sha512"
+    },
     "Microsoft.Win32.Primitives/4.3.0": {
       "type": "package",
       "serviceable": true,
@@ -1303,6 +1326,13 @@
       "sha512": "sha512-c5JVjuVAm4f7E9Vj+v09Z9s2ZsqFDjBpcsyS3M9xRo0bEdm/LVZSzLxxNvfvAwRiiE8nwe1h2G4OwiwlzFKXlA==",
       "path": "nuget.frameworks/5.0.0",
       "hashPath": "nuget.frameworks.5.0.0.nupkg.sha512"
+    },
+    "OpenCover/4.7.1221": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XZsMfTpbGnqLWCQjOeLlbDUU0lazJHbyEX52d7oRSuQX7Ve+23nfk4TF/F61hS382IEHB8WvUwkPB2IIA9WqEQ==",
+      "path": "opencover/4.7.1221",
+      "hashPath": "opencover.4.7.1221.nupkg.sha512"
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
       "type": "package",

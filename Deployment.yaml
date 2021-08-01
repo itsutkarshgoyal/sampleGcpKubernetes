@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: dotnet-app-deployment
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: autopilot-cluster-2
