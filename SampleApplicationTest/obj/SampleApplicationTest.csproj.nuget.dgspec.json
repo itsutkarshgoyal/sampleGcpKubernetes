@@ -1,0 +1,178 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleApplicationTest\\SampleApplicationTest.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleApplicationTest\\SampleApplicationTest.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleApplicationTest\\SampleApplicationTest.csproj",
+        "projectName": "SampleApplicationTest",
+        "projectPath": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleApplicationTest\\SampleApplicationTest.csproj",
+        "packagesPath": "C:\\Users\\utkarshgoyal\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleApplicationTest\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\utkarshgoyal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://pkgs.dev.azure.com/InfinityQS/_packaging/packages%40Local/nuget/v3/index.json": {},
+          "https://pkgs.dev.azure.com/InfinityQS/bde2d5df-c31e-4596-82af-883fe9b8b316/_packaging/devpkgs/nuget/v3/index.json": {},
+          "https://www.myget.org/F/applicationinsights-sdk-labs/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {
+              "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleWebApp\\SampleWebApp.csproj": {
+                "projectPath": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleWebApp\\SampleWebApp.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.NET.Test.Sdk": {
+              "target": "Package",
+              "version": "[16.7.1, )"
+            },
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.10.9, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.16.1, )"
+            },
+            "OpenCover": {
+              "target": "Package",
+              "version": "[4.7.1221, )"
+            },
+            "coverlet.collector": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[1.3.0, )"
+            },
+            "coverlet.msbuild": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "xunit": {
+              "target": "Package",
+              "version": "[2.4.1, )"
+            },
+            "xunit.runner.visualstudio": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.4.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleWebApp\\SampleWebApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleWebApp\\SampleWebApp.csproj",
+        "projectName": "SampleWebApp",
+        "projectPath": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleWebApp\\SampleWebApp.csproj",
+        "packagesPath": "C:\\Users\\utkarshgoyal\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\utkarshgoyal\\Documents\\pipelines\\SampleWebApp\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\utkarshgoyal\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://pkgs.dev.azure.com/InfinityQS/_packaging/packages%40Local/nuget/v3/index.json": {},
+          "https://pkgs.dev.azure.com/InfinityQS/bde2d5df-c31e-4596-82af-883fe9b8b316/_packaging/devpkgs/nuget/v3/index.json": {},
+          "https://www.myget.org/F/applicationinsights-sdk-labs/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.VisualStudio.Azure.Containers.Tools.Targets": {
+              "target": "Package",
+              "version": "[1.10.9, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.103\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
