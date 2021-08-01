@@ -7,8 +7,8 @@ pipeline {
 	   properties = null
 	   docker_port = null
 	   username = 'utkarshgoyal'
-	   cluster_name = 'autopilot-cluster-1'
-	   location = 'us-central1'
+	   cluster_name = 'autopilot-cluster-2'
+	   location = 'asia-east1'
 	   credentials_id = 'TestJenkinsApi'
 	   project_id = 'grand-sphere-321608'
 	}
