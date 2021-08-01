@@ -104,6 +104,7 @@ pipeline {
 		     echo "Move Image to Docker Hub"
 			 
 			 withDockerRegistry([credentialsId: 'DockerHub', url:""]){
+               bat "docker tag i_${username} ${registry}:latest"			  
 			   bat "docker push ${registry}:${BUILD_NUMBER}"
 			   bat "docker push ${registry}:latest"
 			 }
