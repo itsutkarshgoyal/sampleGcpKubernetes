@@ -63,7 +63,7 @@ pipeline {
 			 echo "clean previous build"
 			 bat "dotnet clean"
 			 
-			 // build the project and all its dependies
+			 // build the project and all its dependies.
 			 echo "Code Build"
 			 bat 'dotnet build -c Release -o "SampleWebApp/app/build"'
 			 echo 'start Testing'
