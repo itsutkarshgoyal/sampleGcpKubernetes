@@ -42,14 +42,14 @@ pipeline {
 	     steps {
 		   echo scm.branches[0].name
 		   echo env.location
-		   //echo "Nuget Restore Step"
-		   //bat "dotnet restore"
+		   echo "Nuget Restore Step"
+		   bat "dotnet restore"
 		 }
 	   }
 	   
- 	   /*stage('Start sonarqube analysis'){
+ 	   stage('Start sonarqube analysis'){
 	        when {
-                expression { env.BRANCH_NAME == 'master' }
+                expression { env.BRANCH_NAME == '*/master' }
             }
 	     steps {
 		     echo "Start sonarqube analysis step"
@@ -75,7 +75,7 @@ pipeline {
 	   
 	   stage('Release artifact') {
 	   	        when {
-                expression { env.BRANCH_NAME == 'develop' }
+                expression { env.BRANCH_NAME == '*/develop' }
             }
             steps {
                 echo 'release artifact'
@@ -85,7 +85,7 @@ pipeline {
 	   
 	   stage('Stop sonarqube analysis'){
 	   	     when {
-                expression { env.BRANCH_NAME == 'master' }
+                expression { env.BRANCH_NAME == '*/master' }
             }
 	      steps {
 		     echo "Stop analysis"
