@@ -40,7 +40,7 @@ pipeline {
 	   
 	   stage('nuget restore'){
 	     steps {
-		   echo env.BRANCH_NAME
+		   echo env.GIT_BRANCH
 		   echo env.location
 		   //echo "Nuget Restore Step"
 		   //bat "dotnet restore"
