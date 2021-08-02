@@ -2,6 +2,7 @@ pipeline {
    agent any
    
     environment {
+	   BRANCH_NAME = "${GIT_BRANCH.split('/').size() > 1 ? GIT_BRANCH.split('/')[1..-1].join('/') : GIT_BRANCH}"
 	   scannerHome = tool name: 'SonarQubeScanner'
 	   registry = 'utkarshgoyal/samplekubernetes'
 	   properties = null
@@ -39,17 +40,19 @@ pipeline {
 	   
 	   stage('nuget restore'){
 	     steps {
-		  // echo "Running build ${JOB_NAME} # ${BUILD_NUMBER} for ${properties['user.employeeid']} with docker as ${docker_port}"
 		   echo "Nuget Restore Step"
 		   bat "dotnet restore"
 		 }
 	   }
+	   
  	   stage('Start sonarqube analysis'){
+	        when {
+                expression { env.BRANCH_NAME == 'master' }
+            }
 	     steps {
 		     echo "Start sonarqube analysis step"
 			 withSonarQubeEnv('Test_Sonar'){
-				bat "${scannerHome}/SonarScanner.MSBuild.exe begin /k:SampleWebApp  /d:sonar.cs.opencover.reportsPaths=coverage.opencover.xml"
-				
+				bat "${scannerHome}/SonarScanner.MSBuild.exe begin /k:SampleWebApp  /d:sonar.cs.opencover.reportsPaths=coverage.opencover.xml"				
 			 }
 		 }
 	   }
@@ -63,17 +66,25 @@ pipeline {
 			 // build the project and all its dependies
 			 echo "Code Build"
 			 bat 'dotnet build -c Release -o "SampleWebApp/app/build"'
+			 echo 'start Testing'
+             bat "dotnet test SampleApplicationTest\\SampleApplicationTest.csproj /p:CollectCoverage=true  /p:CoverletOutputFormat=opencover"// -l:xml;LogFileName=NAGPAPITestOutput.xml"
 		 }
 	   }
 	   
-	   stage('Test Case Execution') {
+	   stage('Release artifact') {
+	   	        when {
+                expression { env.BRANCH_NAME == 'develop' }
+            }
             steps {
-                echo 'start Testing'
-                 bat "dotnet test SampleApplicationTest\\SampleApplicationTest.csproj /p:CollectCoverage=true  /p:CoverletOutputFormat=opencover"// -l:xml;LogFileName=NAGPAPITestOutput.xml"
+                echo 'release artifact'
+                bat 'dotnet publish -c Release'
             }
         }
 	   
 	   stage('Stop sonarqube analysis'){
+	   	     when {
+                expression { env.BRANCH_NAME == 'master' }
+            }
 	      steps {
 		     echo "Stop analysis"
 			 withSonarQubeEnv('Test_Sonar'){
@@ -81,7 +92,7 @@ pipeline {
 			 }
 		  }
 	   }
-	   
+	   	   
 	   stage('Docker Image'){
 	    steps {
 		  echo "Docker Image Step"
@@ -89,8 +100,15 @@ pipeline {
 		  bat "docker build -t ${username} --no-cache -f Dockerfile ."
 		}
 	   }
-	   	  	  
-	    stage('Move Image to Docker Hub')
+	   
+	   stage('Containers'){
+	    parallel {
+		 stage('PreContainer Check'){
+			steps {
+			  echo "PreContainer Check"
+			}
+		   }
+	    stage('PublishDockerHub')
 	   {
 	     steps {
 		     echo "Move Image to Docker Hub"
@@ -103,11 +121,13 @@ pipeline {
 			 }
 		 }
 	   }
+		 }
+	   }	   
 	   
-	   stage('Deploy to GKE'){
+	   /*stage('Kubernetes Deployment'){
 		 steps{
 		   step([$class: 'KubernetesEngineBuilder',projectId: env.project_id,clusterName: env.cluster_name,location: env.location, manifestPattern:'deployment.yaml',credentialsId: env.credentials_id, verifyDeployments:true])
 		 }
-		}	   
+		}*/	   
 	}		
-    }
+  }
