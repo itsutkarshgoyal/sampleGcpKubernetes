@@ -47,7 +47,8 @@ pipeline {
 	   
  	   stage('Start sonarqube analysis'){
 	        when {
-                expression { env.BRANCH_NAME == '*/master' }
+               // expression { env.BRANCH_NAME == '*/master' }
+				branch 'master'
             }
 	     steps {
 		     echo "Start sonarqube analysis step"
@@ -73,7 +74,8 @@ pipeline {
 	   
 	   stage('Release artifact') {
 	   	        when {
-                expression { env.BRANCH_NAME == '*/develop' }
+                //expression { env.BRANCH_NAME == '*/develop' }
+				branch 'develop'
             }
             steps {
                 echo 'release artifact'
