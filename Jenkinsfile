@@ -104,10 +104,20 @@ pipeline {
 	   stage('Containers'){
 	    parallel {
 		 stage('PreContainer Check'){
+		 envirnment
+			{
+			containerId = "${bat(script: 'docker ps -a -q -f name=c-utkarshgoyal-develop,returnStdout:true').trim().readLines().drop}"
+			echo containerId
+			}
+			when {
+			  expression{
+				return containerId != null	
+			  }
+			}
 			steps {
 			  echo "PreContainer Check"
 			  bat 'docker ps -f name=c-${registry} -q | xargs --no-run-if-empty docker container stop'
-              bat 'docker container ls -a -fname=c-${registry} -q | xargs -r docker container rm'
+              bat "docker stop c-utkarshgoyal-develop && docker rm c-utkarshgoyal-develop"
 			}
 		   }
 	    stage('PushtoDockerHub')
