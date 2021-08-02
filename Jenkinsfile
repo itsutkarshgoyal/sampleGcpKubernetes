@@ -2,7 +2,7 @@ pipeline {
    agent any
    
     environment {
-	   BRANCH_NAME = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+	   //BRANCH_NAME = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
 	   scannerHome = tool name: 'SonarQubeScanner'
 	   registry = 'utkarshgoyal/samplekubernetes'
 	   properties = null
