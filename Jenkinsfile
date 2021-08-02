@@ -2,7 +2,7 @@ pipeline {
    agent any
    
     environment {
-	   //BRANCH_NAME = sh(returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD').trim()
+	   BRANCH_NAME = "${scm.branches[0].name}"
 	   scannerHome = tool name: 'SonarQubeScanner'
 	   registry = 'utkarshgoyal/samplekubernetes'
 	   properties = null
@@ -39,17 +39,15 @@ pipeline {
 	   }
 	   
 	   stage('nuget restore'){
-	     steps {
-		   echo scm.branches[0].name
-		   echo env.location
-		   //echo "Nuget Restore Step"
-		   //bat "dotnet restore"
+	     steps {		   
+		   echo "Nuget Restore Step"
+		   bat "dotnet restore"
 		 }
 	   }
 	   
- 	   /*stage('Start sonarqube analysis'){
+ 	   stage('Start sonarqube analysis'){
 	        when {
-                expression { env.BRANCH_NAME == 'master' }
+                expression { env.BRANCH_NAME == '*/master' }
             }
 	     steps {
 		     echo "Start sonarqube analysis step"
@@ -75,7 +73,7 @@ pipeline {
 	   
 	   stage('Release artifact') {
 	   	        when {
-                expression { env.BRANCH_NAME == 'develop' }
+                expression { env.BRANCH_NAME == '*/develop' }
             }
             steps {
                 echo 'release artifact'
@@ -85,7 +83,7 @@ pipeline {
 	   
 	   stage('Stop sonarqube analysis'){
 	   	     when {
-                expression { env.BRANCH_NAME == 'master' }
+                expression { env.BRANCH_NAME == '*/master' }
             }
 	      steps {
 		     echo "Stop analysis"
@@ -110,7 +108,7 @@ pipeline {
 			  echo "PreContainer Check"
 			}
 		   }
-	    stage('PublishDockerHub')
+	    stage('PushtoDockerHub')
 	   {
 	     steps {
 		     echo "Move Image to Docker Hub"
