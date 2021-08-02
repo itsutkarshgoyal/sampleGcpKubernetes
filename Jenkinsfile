@@ -106,6 +106,8 @@ pipeline {
 		 stage('PreContainer Check'){
 			steps {
 			  echo "PreContainer Check"
+			  bat 'docker ps -f name=c-${registry} -q | xargs --no-run-if-empty docker container stop'
+              bat 'docker container ls -a -fname=c-${registry} -q | xargs -r docker container rm'
 			}
 		   }
 	    stage('PushtoDockerHub')
@@ -124,7 +126,30 @@ pipeline {
 		 }
 	   }	   
 	   
+	   stage('Docker Deployment'){
+	   	   	when {
+                expression { env.BRANCH_NAME == 'master' }
+            }
+	     steps{
+		   echo "Docker Deployment in master branch"
+		    bat "docker run --name c-${registry} -d -p 7200:80 ${registry}:${BUILD_NUMBER}"
+		 }
+	   }
+	   
+	   stage('Docker Deployment'){
+	   	 when {
+                expression { env.BRANCH_NAME == 'develop' }
+          }
+	     steps{
+		   echo "Docker Deployment in develop branch"
+		    bat "docker run --name c-${registry} -d -p 7300:80 ${registry}:${BUILD_NUMBER}"
+		 }
+	   }
+	   
 	   /*stage('Kubernetes Deployment'){
+	   	   	 when {
+                expression { env.BRANCH_NAME == 'master' }
+          }
 		 steps{
 		   step([$class: 'KubernetesEngineBuilder',projectId: env.project_id,clusterName: env.cluster_name,location: env.location, manifestPattern:'deployment.yaml',credentialsId: env.credentials_id, verifyDeployments:true])
 		 }
