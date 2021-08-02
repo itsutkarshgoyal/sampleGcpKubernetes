@@ -40,7 +40,6 @@ pipeline {
 	   
 	   stage('nuget restore'){
 	     steps {	
-          echo 'frfrfrf...' + env.BRANCH_NAME		 
 		   echo "Nuget Restore Step"
 		   bat "dotnet restore"
 		 }
@@ -48,8 +47,7 @@ pipeline {
 	   
  	   stage('Start sonarqube analysis'){
 	        when {
-               // expression { env.BRANCH_NAME == '*/master' }
-				branch 'master'
+                expression { env.BRANCH_NAME == 'master' }
             }
 	     steps {
 		     echo "Start sonarqube analysis step"
@@ -75,8 +73,7 @@ pipeline {
 	   
 	   stage('Release artifact') {
 	   	        when {
-                //expression { env.BRANCH_NAME == '*/develop' }
-				branch 'develop'
+                expression { env.BRANCH_NAME == 'develop' }
             }
             steps {
                 echo 'release artifact'
@@ -86,7 +83,7 @@ pipeline {
 	   
 	   stage('Stop sonarqube analysis'){
 	   	     when {
-                expression { env.BRANCH_NAME == '*/master' }
+                expression { env.BRANCH_NAME == 'master' }
             }
 	      steps {
 		     echo "Stop analysis"
