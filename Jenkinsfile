@@ -107,7 +107,7 @@ pipeline {
 		 environment
 			{
 			containerId = "${bat(script: 'docker ps -a -q -f name=c-utkarshgoyal-develop,returnStdout:true').trim().readLines().drop}"
-			echo env.containerId
+			//echo env.containerId
 			}
 			when {
 			  expression{
@@ -124,6 +124,7 @@ pipeline {
 	   {
 	     steps {
 		     echo "Move Image to Docker Hub"
+			 echo env.containerId
 			 bat "docker tag ${username} ${registry}:${BUILD_NUMBER}"
 			 bat "docker tag ${username} ${registry}:latest"
 			 
