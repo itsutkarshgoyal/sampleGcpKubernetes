@@ -39,13 +39,7 @@ pipeline {
 	   }
 	   
 	   stage('nuget restore'){
-	     steps {
-		   echo scm.branches[0].name
-		   echo env.BRANCH_NAME
-		   echo "${env.BRANCH_NAME}" == "*/develop"
-		   echo "${env.BRANCH_NAME}" == '*/develop'
-		   echo env.BRANCH_NAME == '*/develop'
-		   
+	     steps {		   
 		   echo "Nuget Restore Step"
 		   bat "dotnet restore"
 		 }
