@@ -2,7 +2,7 @@ pipeline {
    agent any
    
     environment {
-	   BRANCH_NAME = "${scm.branches[0].name}"
+	   //BRANCH_NAME = "${scm.branches[0].name}"
 	   scannerHome = tool name: 'SonarQubeScanner'
 	   registry = 'utkarshgoyal/samplekubernetes'
 	   properties = null
@@ -39,7 +39,7 @@ pipeline {
 	   }
 	   
 	   stage('nuget restore'){
-	     steps {		   
+	     steps {	
 		   echo "Nuget Restore Step"
 		   bat "dotnet restore"
 		 }
@@ -47,7 +47,7 @@ pipeline {
 	   
  	   stage('Start sonarqube analysis'){
 	        when {
-                expression { env.BRANCH_NAME == '*/master' }
+                expression { env.BRANCH_NAME == 'master' }
             }
 	     steps {
 		     echo "Start sonarqube analysis step"
@@ -63,7 +63,7 @@ pipeline {
 			 echo "clean previous build"
 			 bat "dotnet clean"
 			 
-			 // build the project and all its dependies
+			 // build the project and all its dependies.
 			 echo "Code Build"
 			 bat 'dotnet build -c Release -o "SampleWebApp/app/build"'
 			 echo 'start Testing'
@@ -73,7 +73,7 @@ pipeline {
 	   
 	   stage('Release artifact') {
 	   	        when {
-                expression { env.BRANCH_NAME == '*/develop' }
+                expression { env.BRANCH_NAME == 'develop' }
             }
             steps {
                 echo 'release artifact'
@@ -83,7 +83,7 @@ pipeline {
 	   
 	   stage('Stop sonarqube analysis'){
 	   	     when {
-                expression { env.BRANCH_NAME == '*/master' }
+                expression { env.BRANCH_NAME == 'master' }
             }
 	      steps {
 		     echo "Stop analysis"
