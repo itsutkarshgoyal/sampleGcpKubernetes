@@ -40,12 +40,14 @@ pipeline {
 	   
 	   stage('nuget restore'){
 	     steps {
-		   echo "Nuget Restore Step"
-		   bat "dotnet restore"
+		   echo env.BRANCH_NAME
+		   echo env.location
+		   //echo "Nuget Restore Step"
+		   //bat "dotnet restore"
 		 }
 	   }
 	   
- 	   stage('Start sonarqube analysis'){
+ 	   /*stage('Start sonarqube analysis'){
 	        when {
                 expression { env.BRANCH_NAME == 'master' }
             }
