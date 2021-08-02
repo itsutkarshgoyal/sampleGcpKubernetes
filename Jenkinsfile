@@ -40,7 +40,7 @@ pipeline {
 	   
 	   stage('nuget restore'){
 	     steps {
-		   echo scm.branches[1].name
+		   echo scm.branches[0].name
 		   echo env.location
 		   //echo "Nuget Restore Step"
 		   //bat "dotnet restore"
