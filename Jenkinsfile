@@ -108,7 +108,7 @@ pipeline {
 			  echo "PreContainer Check"
 			}
 		   }
-	    stage('PublishDockerHub')
+	    stage('PushtoDockerHub')
 	   {
 	     steps {
 		     echo "Move Image to Docker Hub"
