@@ -2,7 +2,7 @@ pipeline {
    agent any
    
     environment {
-	   BRANCH_NAME = "${scm.branches[0].name}"
+	   //BRANCH_NAME = "${scm.branches[0].name}"
 	   scannerHome = tool name: 'SonarQubeScanner'
 	   registry = 'utkarshgoyal/samplekubernetes'
 	   properties = null
@@ -39,7 +39,8 @@ pipeline {
 	   }
 	   
 	   stage('nuget restore'){
-	     steps {		   
+	     steps {	
+          echo 'frfrfrf...' + env.BRANCH_NAME		 
 		   echo "Nuget Restore Step"
 		   bat "dotnet restore"
 		 }
