@@ -126,7 +126,7 @@ pipeline {
 		 }
 	   }	   
 	   
-	   stage('Docker Deployment'){
+	   stage('Docker Deployment Master'){
 	   	   	when {
                 expression { env.BRANCH_NAME == 'master' }
             }
