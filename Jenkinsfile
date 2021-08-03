@@ -4,7 +4,7 @@ pipeline {
     environment {
 	   scannerHome = tool name: 'SonarQubeScanner'
 	   registry = 'utkarshgoyal/samplekubernetes'
-	   docker_port = ("${env.BRANCH_NAME}" == 'master') ? "7200" : 7300"
+	   docker_port = ("${env.BRANCH_NAME}" == 'master') ? 7200 : 7300
 	   username = 'utkarshgoyal'
 	   container_name = 'c-${env.username}-${env.BRANCH_NAME}'
 	   cluster_name = 'cluster-1'
