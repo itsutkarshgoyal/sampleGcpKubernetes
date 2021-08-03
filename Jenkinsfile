@@ -104,7 +104,7 @@ pipeline {
 	   stage('Containers'){
 	    parallel {
 		 stage('PreContainer Check'){
-		 script{
+		 Script{
 		 echo "check check"
 		 }
 		 environment
