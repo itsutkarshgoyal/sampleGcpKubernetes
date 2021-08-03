@@ -104,9 +104,6 @@ pipeline {
 	   stage('Containers'){
 	    parallel {
 		 stage('PreContainer Check'){
-		 Script{
-		 echo "check check"
-		 }
 		 environment
 			{
 			containerId = "${bat(script: 'docker ps -a -q -f name=c-utkarshgoyal-develop,returnStdout:true').trim().readLines().drop}"
