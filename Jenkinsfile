@@ -6,7 +6,7 @@ pipeline {
 	   registry = 'utkarshgoyal/samplekubernetes'
 	   docker_port = "${env.BRANCH_NAME == 'master'?7200: 7300}"
 	   username = 'utkarshgoyal'
-	   container_name = 'c-${env.username}-${env.BRANCH_NAME}'
+	   container_name = "c-utkarshgoyal-${env.BRANCH_NAME}"
 	   cluster_name = 'cluster-1'
 	   location = 'us-central1-c'
 	   credentials_id = 'TestJenkinsApi'
