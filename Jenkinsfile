@@ -108,16 +108,16 @@ pipeline {
                         script {
                             String dockerCommand = "docker ps -a -q -f name=${container_name}"
                             String commandExecution = "${bat(returnStdout: true, script: dockerCommand)}"
-                            String DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID = "${commandExecution.trim().readLines().drop(1).join(' ')}"
+                            String docker_previous_containerId = "${commandExecution.trim().readLines().drop(1).join(' ')}"
 
-                            if (DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID != '') {
-                                echo "Previous Deploymnet Found. Container Id ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
+                            if (docker_previous_containerId != '') {
+                                echo "Previous Deploymnet Found. Container Id ${docker_previous_containerId}"
 
-                                echo "Stopping Container ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
-                                bat "docker stop ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
+                                echo "Stopping Container ${docker_previous_containerId}"
+                                bat "docker stop ${docker_previous_containerId}"
 
-                                echo "Removing Container ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
-                                bat "docker rm ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
+                                echo "Removing Container ${docker_previous_containerId}"
+                                bat "docker rm ${docker_previous_containerId}"
                             } else {
                                 echo 'Container Not Deployed Previously'
                             }
@@ -125,21 +125,21 @@ pipeline {
                         echo 'Pre-Container Check Complete'
                     }
                 }
-	    stage('PushtoDockerHub')
-	   {
-	     steps {
-		     echo "Move Image to Docker Hub"
-			 echo env.containerId
-			 bat "docker tag i-${username}-${BRANCH_NAME} ${registry}:${BUILD_NUMBER}"
-			 bat "docker tag i-${username}-${BRANCH_NAME} ${registry}:latest"
-			 
-			 withDockerRegistry([credentialsId: 'DockerHub', url:""]){	  
-			   bat "docker push  ${registry}:${BUILD_NUMBER}"
-			   bat "docker push  ${registry}:latest"
-			 }
-		 }
-	   }
-		 }
+				stage('PushtoDockerHub')
+			   {
+				 steps {
+					 echo "Move Image to Docker Hub"
+					 echo env.containerId
+					 bat "docker tag i-${username}-${BRANCH_NAME} ${registry}:${BUILD_NUMBER}"
+					 bat "docker tag i-${username}-${BRANCH_NAME} ${registry}:latest"
+					 
+					 withDockerRegistry([credentialsId: 'DockerHub', url:""]){	  
+					   bat "docker push  ${registry}:${BUILD_NUMBER}"
+					   bat "docker push  ${registry}:latest-${BRANCH_NAME}"
+					 }
+				  }
+			  }
+		   }
 	   }	   
 	   	   
 	   stage('Docker Deployment'){
@@ -149,13 +149,10 @@ pipeline {
 		 }
 	   }
 	   
-	   /*stage('Kubernetes Deployment'){
-	   	   	 when {
-                expression { env.BRANCH_NAME == 'master' }
-          }
+	   stage('Kubernetes Deployment'){
 		 steps{
 		   step([$class: 'KubernetesEngineBuilder',projectId: env.project_id,clusterName: env.cluster_name,location: env.location, manifestPattern:'deployment.yaml',credentialsId: env.credentials_id, verifyDeployments:true])
 		 }
-		}*/	   
+	   }	   
 	}		
   }

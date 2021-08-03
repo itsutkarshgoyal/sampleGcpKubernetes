@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: cluster-1
-        image: utkarshgoyal/samplekubernetes:latest
+        image: utkarshgoyal/samplekubernetes:latest-develop
         ports:
         - containerPort: 80
 ---
