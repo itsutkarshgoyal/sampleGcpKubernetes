@@ -97,62 +97,55 @@ pipeline {
 	    steps {
 		  echo "Docker Image Step"
 		  bat 'dotnet publish -c Release'
-		  bat "docker build -t ${username} --no-cache -f Dockerfile ."
+		  bat "docker build -t i-${username}-${BRANCH_NAME} --no-cache -f Dockerfile ."
 		}
 	   }
 	   
 	   stage('Containers'){
 	    parallel {
-		 stage('PreContainer Check'){
-		 environment
-			{
-			containerId = "${bat(script: 'docker ps -a -q -f name=c-utkarshgoyal-develop,returnStdout:true').trim().readLines().drop}"
-			//echo env.containerId
-			}
-			when {
-			  expression{
-				return containerId != null	
-			  }
-			}
-			steps {
-			  echo "PreContainer Check"
-			  bat 'docker ps -f name=c-${registry} -q | xargs --no-run-if-empty docker container stop'
-              bat "docker stop c-utkarshgoyal-develop && docker rm c-utkarshgoyal-develop"
-			}
-		   }
+                stage('Pre-Container Check') {
+                    steps {
+                        echo 'Checking if Container is previously deployed'
+                        script {
+                            String dockerCommand = "docker ps -a -q -f name=${CONTAINER_NAME}"
+                            String commandExecution = "${bat(returnStdout: true, script: dockerCommand)}"
+                            DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID = "${commandExecution.trim().readLines().drop(1).join(' ')}"
+
+                            if (DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID != '') {
+                                echo "Previous Deploymnet Found. Container Id ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
+
+                                echo "Stopping Container ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
+                                bat "docker stop ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
+
+                                echo "Removing Container ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
+                                bat "docker rm ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
+                            } else {
+                                echo 'Container Not Deployed Previously'
+                            }
+                        }
+                        echo 'Pre-Container Check Complete'
+                    }
+                }
 	    stage('PushtoDockerHub')
 	   {
 	     steps {
 		     echo "Move Image to Docker Hub"
 			 echo env.containerId
-			 bat "docker tag ${username} ${registry}:${BUILD_NUMBER}"
-			 bat "docker tag ${username} ${registry}:latest"
+			 bat "docker tag i-${username}-${BRANCH_NAME} ${registry}:${BUILD_NUMBER}"
+			 bat "docker tag i-${username}-${BRANCH_NAME} ${registry}:latest"
 			 
 			 withDockerRegistry([credentialsId: 'DockerHub', url:""]){	  
-			   bat "docker push ${registry}:${BUILD_NUMBER}"
-			   bat "docker push ${registry}:latest"
+			   bat "docker push i-${username}-${BRANCH_NAME} ${registry}:${BUILD_NUMBER}"
+			   bat "docker push i-${username}-${BRANCH_NAME} ${registry}:latest"
 			 }
 		 }
 	   }
 		 }
 	   }	   
-	   
-	   stage('Docker Deployment Master'){
-	   	   	when {
-                expression { env.BRANCH_NAME == 'master' }
-            }
-	     steps{
-		   echo "Docker Deployment in master branch"
-		    bat "docker run --name c-${registry} -d -p 7200:80 ${registry}:${BUILD_NUMBER}"
-		 }
-	   }
-	   
+	   	   
 	   stage('Docker Deployment'){
-	   	 when {
-                expression { env.BRANCH_NAME == 'develop' }
-          }
 	     steps{
-		   echo "Docker Deployment in develop branch"
+		   echo "Docker Deployment"
 		    bat "docker run --name c-${registry} -d -p 7300:80 ${registry}:${BUILD_NUMBER}"
 		 }
 	   }
