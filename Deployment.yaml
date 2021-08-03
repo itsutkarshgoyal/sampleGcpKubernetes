@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: dotnet-app-deployment
+  name: dotnet-app-deployment-develop
 spec:
   replicas: 2
   selector:
@@ -21,7 +21,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: cluster-1
+  name: cluster-1-develop
 spec:
   type: NodePort
   selector:
