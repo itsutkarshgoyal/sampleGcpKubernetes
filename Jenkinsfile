@@ -2,12 +2,11 @@ pipeline {
    agent any
    
     environment {
-	   //BRANCH_NAME = "${scm.branches[0].name}"
 	   scannerHome = tool name: 'SonarQubeScanner'
 	   registry = 'utkarshgoyal/samplekubernetes'
-	   properties = null
-	   docker_port = null
+	   docker_port = "${env.BRANCH_NAME == 'master'?7200: 7300}"
 	   username = 'utkarshgoyal'
+	   container_name = "c-utkarshgoyal-${env.BRANCH_NAME}"
 	   cluster_name = 'cluster-1'
 	   location = 'us-central1-c'
 	   credentials_id = 'TestJenkinsApi'
@@ -97,37 +96,63 @@ pipeline {
 	    steps {
 		  echo "Docker Image Step"
 		  bat 'dotnet publish -c Release'
-		  bat "docker build -t ${username} --no-cache -f Dockerfile ."
+		  bat "docker build -t i-${username}-${BRANCH_NAME} --no-cache -f Dockerfile ."
 		}
 	   }
 	   
 	   stage('Containers'){
 	    parallel {
-		 stage('PreContainer Check'){
-			steps {
-			  echo "PreContainer Check"
-			}
+                stage('Pre-Container Check') {
+                    steps {
+                        echo 'Checking if Container is previously deployed'
+                        script {
+                            String dockerCommand = "docker ps -a -q -f name=${container_name}"
+                            String commandExecution = "${bat(returnStdout: true, script: dockerCommand)}"
+                            String docker_previous_containerId = "${commandExecution.trim().readLines().drop(1).join(' ')}"
+
+                            if (docker_previous_containerId != '') {
+                                echo "Previous Deploymnet Found. Container Id ${docker_previous_containerId}"
+
+                                echo "Stopping Container ${docker_previous_containerId}"
+                                bat "docker stop ${docker_previous_containerId}"
+
+                                echo "Removing Container ${docker_previous_containerId}"
+                                bat "docker rm ${docker_previous_containerId}"
+                            } else {
+                                echo 'Container Not Deployed Previously'
+                            }
+                        }
+                        echo 'Pre-Container Check Complete'
+                    }
+                }
+				stage('PushtoDockerHub')
+			   {
+				 steps {
+					 echo "Move Image to Docker Hub"
+					 echo env.containerId
+					 bat "docker tag i-${username}-${BRANCH_NAME} ${registry}:${BUILD_NUMBER}"
+					 bat "docker tag i-${username}-${BRANCH_NAME} ${registry}:latest"
+					 
+					 withDockerRegistry([credentialsId: 'DockerHub', url:""]){	  
+					   bat "docker push  ${registry}:${BUILD_NUMBER}"
+					   bat "docker push  ${registry}:latest-${BRANCH_NAME}"
+					 }
+				  }
+			  }
 		   }
-	    stage('PushtoDockerHub')
-	   {
-	     steps {
-		     echo "Move Image to Docker Hub"
-			 bat "docker tag ${username} ${registry}:${BUILD_NUMBER}"
-			 bat "docker tag ${username} ${registry}:latest"
-			 
-			 withDockerRegistry([credentialsId: 'DockerHub', url:""]){	  
-			   bat "docker push ${registry}:${BUILD_NUMBER}"
-			   bat "docker push ${registry}:latest"
-			 }
+	   }	   
+	   	   
+	   stage('Docker Deployment'){
+	     steps{
+		   echo "Docker Deployment"
+		    bat "docker run --name ${container_name} -d -p ${docker_port}:80 ${registry}:${BUILD_NUMBER}"
 		 }
 	   }
-		 }
-	   }	   
 	   
-	   /*stage('Kubernetes Deployment'){
+	   stage('Kubernetes Deployment'){
 		 steps{
 		   step([$class: 'KubernetesEngineBuilder',projectId: env.project_id,clusterName: env.cluster_name,location: env.location, manifestPattern:'deployment.yaml',credentialsId: env.credentials_id, verifyDeployments:true])
 		 }
-		}*/	   
+	   }	   
 	}		
   }
