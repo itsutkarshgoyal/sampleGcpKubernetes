@@ -4,9 +4,9 @@ pipeline {
     environment {
 	   scannerHome = tool name: 'SonarQubeScanner'
 	   registry = 'utkarshgoyal/samplekubernetes'
-	   container_name = 'c-${registry}-${BRANCH_NAME}'
-	   docker_port = "${env.BRANCH_NAME} == 'master' ? 7200 : 7300"
+	   docker_port = "${env.BRANCH_NAME}" == "master" ? "7200" : 7300"
 	   username = 'utkarshgoyal'
+	   container_name = 'c-${env.username}-${env.BRANCH_NAME}'
 	   cluster_name = 'cluster-1'
 	   location = 'us-central1-c'
 	   credentials_id = 'TestJenkinsApi'
