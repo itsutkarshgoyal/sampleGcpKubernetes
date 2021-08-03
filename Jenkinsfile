@@ -2,11 +2,10 @@ pipeline {
    agent any
    
     environment {
-	   //BRANCH_NAME = "${scm.branches[0].name}"
 	   scannerHome = tool name: 'SonarQubeScanner'
 	   registry = 'utkarshgoyal/samplekubernetes'
-	   properties = null
-	   docker_port = null
+	   container_name = 'c-${registry}-${BRANCH_NAME}'
+	   docker_port = ${BRANCH_NAME} == 'master'?7200:7300
 	   username = 'utkarshgoyal'
 	   cluster_name = 'cluster-1'
 	   location = 'us-central1-c'
@@ -107,9 +106,9 @@ pipeline {
                     steps {
                         echo 'Checking if Container is previously deployed'
                         script {
-                            String dockerCommand = "docker ps -a -q -f name=${CONTAINER_NAME}"
+                            String dockerCommand = "docker ps -a -q -f name=${container_name}"
                             String commandExecution = "${bat(returnStdout: true, script: dockerCommand)}"
-                            DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID = "${commandExecution.trim().readLines().drop(1).join(' ')}"
+                            String DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID = "${commandExecution.trim().readLines().drop(1).join(' ')}"
 
                             if (DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID != '') {
                                 echo "Previous Deploymnet Found. Container Id ${DOCKER_PREVIOUSDEPLOYMNET_CONTAINER_ID}"
@@ -135,8 +134,8 @@ pipeline {
 			 bat "docker tag i-${username}-${BRANCH_NAME} ${registry}:latest"
 			 
 			 withDockerRegistry([credentialsId: 'DockerHub', url:""]){	  
-			   bat "docker push i-${username}-${BRANCH_NAME} ${registry}:${BUILD_NUMBER}"
-			   bat "docker push i-${username}-${BRANCH_NAME} ${registry}:latest"
+			   bat "docker push  ${registry}:${BUILD_NUMBER}"
+			   bat "docker push  ${registry}:latest"
 			 }
 		 }
 	   }
@@ -146,7 +145,7 @@ pipeline {
 	   stage('Docker Deployment'){
 	     steps{
 		   echo "Docker Deployment"
-		    bat "docker run --name c-${registry} -d -p 7300:80 ${registry}:${BUILD_NUMBER}"
+		    bat "docker run --name ${container_name} -d -p ${docker_port}:80 ${registry}:${BUILD_NUMBER}"
 		 }
 	   }
 	   
