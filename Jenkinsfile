@@ -152,7 +152,8 @@ pipeline {
 	   stage('Kubernetes Deployment'){
 		 steps{
 		   /*step([$class: 'KubernetesEngineBuilder',projectId: env.project_id,clusterName: env.cluster_name,location: env.location, manifestPattern:'deployment.yaml',credentialsId: env.credentials_id, verifyDeployments:true])*/
-		   bat "kubectl apply -f deployment.yaml"
+		   bat "gcloud container clusters get-credentials cluster-1 --zone us-central1-c --project grand-sphere-321608"
+		   bat "kubectl apply -f deployment.yaml --token"
 		 }
 	   }	   
 	}		
