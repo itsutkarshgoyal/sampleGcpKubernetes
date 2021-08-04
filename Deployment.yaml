@@ -2,8 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: dotnet-app-deployment-develop
+  namespace:kubernetes-cluster-utkarshgoyal
 spec:
-  replicas: 2
+  replicas: 4
   selector:
     matchLabels:
       app: cluster-1
@@ -22,6 +23,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: cluster-1-develop
+  namespace:kubernetes-cluster-utkarshgoyal
 spec:
   type: NodePort
   selector:
