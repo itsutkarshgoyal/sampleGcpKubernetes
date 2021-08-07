@@ -8,8 +8,13 @@ is pushed to a public dockerhub repository and deployed on Google Kubernetes Eng
 
 
 
+![](Screenshots/jenkins-develop.PNG)
 
+![](Screenshots/jenkins-master.PNG)
 
+![](Screenshots/gcp-1.PNG)
+
+![](Screenshots/gcp-2.PNG)
 ## Tools & Techonologies
 
 ```bash
