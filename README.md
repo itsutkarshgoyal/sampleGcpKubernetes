@@ -9,7 +9,7 @@ is pushed to a public dockerhub repository and deployed on Google Kubernetes Eng
 
 
 
-![](Screenshots/jenkins-develop.png)
+![](Screenshots/jenkins-develop.PNG)
 ## Tools & Techonologies
 
 ```bash
